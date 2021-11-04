@@ -15,13 +15,13 @@ def get_trades_from_user(user_id, crypto_id=None):
 
     return trades
 
-def new_trade (user_id, cripto_id, unit_price:float, quantity:float, unit:str='usd'):
+def new_trade (user_id, crypto_id, unit_price:float, quantity:float, unit:str='usd'):
     if quantity > 0 : 
         operation = 'buy'
     elif quantity == 0:
-        Error("Can't trade 0 amount of cryptocurrencies")
+        raise Exception("Can't trade 0 amount of cryptocurrencies")
     else:
-        quantity = 'sell'
+        operation = 'sell'
 
     # Checa se o usuário tem dinheiro o suficiente para realizar a transação
     user = User.objects.get(id=user_id)
@@ -29,7 +29,8 @@ def new_trade (user_id, cripto_id, unit_price:float, quantity:float, unit:str='u
 
     if user_current_money >= unit_price * quantity:
         trade = Broker.objects.create(
-            cripto_id = cripto_id, 
+            user = user,
+            crypto_id = crypto_id, 
             operation = operation,
             unit_price = unit_price, 
             unit = unit, 
@@ -37,4 +38,4 @@ def new_trade (user_id, cripto_id, unit_price:float, quantity:float, unit:str='u
         )
         return trade
     else:
-        return Error('Money amount is not enough')
+        raise Exception('Money amount is not enough')
