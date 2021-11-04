@@ -1,6 +1,4 @@
 from django.db import models
-from users.models import User
-
 
 class Broker(models.Model):
     user        = models.ForeignKey('users.user', on_delete=models.CASCADE)

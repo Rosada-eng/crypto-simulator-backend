@@ -6,11 +6,12 @@ from .models import User
 from broker.models import Broker
 
 #! New user
-def new_user(first_name, last_name, email, password,initial_money:int=10000, birth_date=None):
+def new_user(first_name, last_name, email,initial_money:int=10000, birth_date=None):
     user = User.objects.create(
         first_name=first_name, last_name=last_name,email=email,
-        password=password, initial_money=initial_money, birth_date=birth_date,
+        initial_money=initial_money, birth_date=birth_date,
         )
+    #TODO: add password
 
     return user
 
@@ -24,8 +25,8 @@ def edit_profile(user_id, new_first_name:None, new_last_name:None,
         user.last_name = new_last_name
     if new_email is not None and new_email != user.email:
         user.email = new_email
-    if new_password is not None and new_password != user.password:
-        user.password = new_password
+    # if new_password is not None and new_password != user.password:
+    #     user.password = new_password
     if new_birth_date is not None and new_birth_date != user.birth_date:
         user.birth_date = new_birth_date
 

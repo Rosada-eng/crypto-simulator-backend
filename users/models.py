@@ -6,8 +6,8 @@ class User(models.Model):
     first_name          = models.CharField(max_length=40)
     last_name           = models.CharField(max_length=40)
     email               = models.EmailField(max_length=150, unique=True)
-    birth_date          = models.DateTimeField()
-    password            = models.PasswordField(max_length=50)
+    birth_date          = models.DateTimeField(blank=True)
+    # password            = models.PasswordField(max_length=50)
     initial_money       = models.FloatField(verbose_name='amount of initial money')
     initial_money_unit  = models.CharField(max_length=10)
 
