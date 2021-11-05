@@ -2,7 +2,6 @@
     >>BROKER
     Métodos para manipular o banco de dados da coleção Broker
 """
-from django.core.checks.messages import Error
 from .models import Broker
 from users.models import User
 

@@ -33,3 +33,4 @@ class BrokerTestCase(TestCase):
             new_trade(user.id, crypto_id='btc', unit_price=1000000, quantity=10)
 
         self.assertTrue('Money amount is not enough' in str(context.exception))
+ 
