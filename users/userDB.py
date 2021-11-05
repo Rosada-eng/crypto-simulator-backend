@@ -31,6 +31,7 @@ def edit_profile(user_id, new_first_name:None, new_last_name:None,
         user.birth_date = new_birth_date
 
     user.save()
+    return user
 
 #! Delete user
 def delete_user(user_id):
