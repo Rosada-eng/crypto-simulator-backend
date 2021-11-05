@@ -13,6 +13,6 @@ urlpatterns = [
     path('new_user/', views.create_new_user, name='create_user'),
 
     # Deleta um usuário
-    path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+    path('remove_user/<int:user_id>/', views.remove_user, name='remove_user'),
 
 ]

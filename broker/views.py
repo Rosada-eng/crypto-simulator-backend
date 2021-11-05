@@ -33,4 +33,5 @@ def make_trade(request):
     """
 
     trade = new_trade(**request.data)
-    return trade
+    serialized_trade = BrokerSerializer(trade)
+    return Response(serialized_trade.data)

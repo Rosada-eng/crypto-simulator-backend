@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
+from rest_framework import status
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from django.http import Http404
 from .userDB import *
@@ -25,15 +27,16 @@ def get_user(request, user_id):
             user = User.objects.get(id=user_id)
             serialized_user = UserSerializer(user)
 
-            return Response(serialized_user)
+            return Response(serialized_user.data)
 
         except User.DoesNotExist:
             raise Http404()
 
     elif request.method == 'POST':
         try:
-            edited_user = edit_profile(user_id, **request.body)
-            return edited_user
+            edited_user = edit_profile(user_id, **request.data)
+            serialized_user = UserSerializer(edited_user)
+            return Response(serialized_user.data)
         except User.DoesNotExist:
             raise Http404()
 
@@ -46,19 +49,33 @@ def create_new_user(request):
 
         Formato do body esperado para post:
         body = {
-            (req) - first_name: str, last_name: str, email: str,
-            (opcional) - initial_money: int, birth_date: date 
+
+            -- required --
+            "first_name": str,
+            "last_name": str,
+            "email": str,
+
+            -- optional --
+            "birth_date": date,
+            "initial_money": int,
         }
     """
-    user = new_user(**request.body)
-    return user
+    print(request.data)
+    user = new_user(**request.data)
+
+    serialized_user = UserSerializer(user)
+    return Response(serialized_user.data)
 
 @api_view(['POST'])
-def delete_user(request, user_id):
+def remove_user(request, user_id):
     """ 
         API que deleta um usuário no banco de dados
     """
-    result = delete_user(user_id)
-    return result
+    try:
+        print("user_id = ", user_id)
+        result = delete_user(user_id)
+        print("r=",result)
+        return Response(data = {'deleted': True}, status=status.HTTP_200_OK)
 
-        
+    except:
+        raise Http404()

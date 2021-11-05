@@ -9,15 +9,15 @@ from broker.models import Broker
 def new_user(first_name, last_name, email,initial_money:int=10000, birth_date=None):
     user = User.objects.create(
         first_name=first_name, last_name=last_name,email=email,
-        initial_money=initial_money, birth_date=birth_date,
+        initial_money=initial_money, birth_date=birth_date, initial_money_unit='usd'
         )
     #TODO: add password
 
     return user
 
 #! Edit some field (name | email | birth_date)
-def edit_profile(user_id, new_first_name:None, new_last_name:None,
-                new_email:None,new_password:None, new_birth_date:None):
+def edit_profile(user_id, new_first_name=None, new_last_name=None,
+                new_email=None,new_password=None, new_birth_date=None):
     user = User.objects.get(id=user_id)
     if new_first_name is not None and new_first_name != user.first_name:
         user.first_name = new_first_name
