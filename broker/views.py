@@ -23,13 +23,15 @@ def get_trades(request, user_id):
 def make_trade(request):
     """
         API que chama o método para gerar novas transações:
-        body esperado = {
-            user_id: any,
-            crypto_id: any,
-            unit_price: float,
-            quantity: int (+: buy | -: sell),
-            unit: str:'usd',
-        }
+        
+            body = {
+                -- required -- 
+                "user_id": any,
+                "crypto_id": any,
+                "unit_price": float,
+                "quantity": int(+ | -),
+            }
+
     """
 
     trade = new_trade(**request.data)

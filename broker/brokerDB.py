@@ -14,7 +14,7 @@ def get_trades_from_user(user_id, crypto_id=None):
 
     return trades
 
-def new_trade (user_id, crypto_id, unit_price:float, quantity:float, unit:str='usd'):
+def new_trade (user_id, crypto_id, unit_price, quantity, unit:str='usd'):
     if quantity > 0 : 
         operation = 'buy'
     elif quantity == 0:
@@ -26,7 +26,7 @@ def new_trade (user_id, crypto_id, unit_price:float, quantity:float, unit:str='u
     user = User.objects.get(id=user_id)
     user_current_money = user._check_money_amount()
 
-    if user_current_money >= unit_price * quantity:
+    if user_current_money >= float(unit_price) * float(quantity):
         trade = Broker.objects.create(
             user = user,
             crypto_id = crypto_id, 
