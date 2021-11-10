@@ -6,18 +6,18 @@ from .models import User
 from broker.models import Broker
 
 #! New user
-def new_user(first_name, last_name, email,initial_money:int=10000, birth_date=None):
+def new_user(first_name, last_name, email, password, initial_money:int=10000):
     user = User.objects.create(
-        first_name=first_name, last_name=last_name,email=email,
-        initial_money=initial_money, birth_date=birth_date, initial_money_unit='usd'
+        first_name=first_name, last_name=last_name,email=email,password=password,
+        initial_money=initial_money,initial_money_unit='usd'
         )
     #TODO: add password
 
     return user
 
-#! Edit some field (name | email | birth_date)
+#! Edit some field (name | email | password)
 def edit_profile(user_id, new_first_name=None, new_last_name=None,
-                new_email=None,new_password=None, new_birth_date=None):
+                new_email=None,new_password=None):
     user = User.objects.get(id=user_id)
     if new_first_name is not None and new_first_name != user.first_name:
         user.first_name = new_first_name
@@ -25,10 +25,9 @@ def edit_profile(user_id, new_first_name=None, new_last_name=None,
         user.last_name = new_last_name
     if new_email is not None and new_email != user.email:
         user.email = new_email
-    # if new_password is not None and new_password != user.password:
-    #     user.password = new_password
-    if new_birth_date is not None and new_birth_date != user.birth_date:
-        user.birth_date = new_birth_date
+    if new_password is not None and new_password != user.password:
+        user.password = new_password
+
 
     user.save()
     return user
@@ -38,7 +37,9 @@ def delete_user(user_id):
     result = User.objects.delete(id=user_id)
     return result
 
-
+#TODO: Trocar InitialMoney por CurrentMoney
+#TODO: Adicionar opção de Depositar/Retirar dinheiro
+#TODO: Ao realizar Trade, alterar CurrentMoney
 
 # def check_for_partial_profit(user_id, current_usd_value):
 #     #! FRONTEND --> precisa chamar API externa para pegar o valor atual de cada criptomoeda

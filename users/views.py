@@ -7,38 +7,40 @@ from django.http import Http404
 from .userDB import *
 from .serializers import UserSerializer
 
-@api_view(['GET', 'POST'])
-def get_user(request, user_id):
+@api_view(['GET'])
+def get_user(request, user_email):
     """ 
         @GET:
-        Devolve os dados de um usuário.
+        Devolve os dados de um usuário. Faz o matching pelo e-mail
+        """
+
+    try:
+        user = User.objects.get(email=user_email)
+        serialized_user = UserSerializer(user)
+
+        return Response(serialized_user.data)
+
+    except User.DoesNotExist:
+        raise Http404()
+
+@api_view(['POST'])
+def edit_user(request, user_id):
+    """
         @POST:
-        Altera os dados de um usuário.
+        Altera os dados de um usuário. Faz o matchin pelo _id
         Formato do body esperado para post:
         body = {
             ...
             new_<nome do campo com alteração>: str,
             ...
         }
-        #TODO: Validar se quem está pedindo as alterações é o próprio usuário
     """
-    if request.method == 'GET':
-        try:
-            user = User.objects.get(id=user_id)
-            serialized_user = UserSerializer(user)
-
-            return Response(serialized_user.data)
-
-        except User.DoesNotExist:
-            raise Http404()
-
-    elif request.method == 'POST':
-        try:
-            edited_user = edit_profile(user_id, **request.data)
-            serialized_user = UserSerializer(edited_user)
-            return Response(serialized_user.data)
-        except User.DoesNotExist:
-            raise Http404()
+    try:
+        edited_user = edit_profile(user_id, **request.data)
+        serialized_user = UserSerializer(edited_user)
+        return Response(serialized_user.data)
+    except User.DoesNotExist:
+        raise Http404()
 
 
 @api_view(['POST'])
@@ -54,9 +56,9 @@ def create_new_user(request):
             "first_name": str,
             "last_name": str,
             "email": str,
+            "password": str,
 
             -- optional --
-            "birth_date": date,
             "initial_money": int,
         }
     """
