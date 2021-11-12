@@ -3,6 +3,7 @@ from django.db import models
 class Broker(models.Model):
     user        = models.ForeignKey('users.user', on_delete=models.CASCADE)
     crypto_id   = models.CharField(max_length=60)
+    crypto_name = models.CharField(max_length=60)
     operation   = models.CharField(max_length=4)
     unit_price  = models.FloatField()
     unit        = models.CharField(max_length=10, default='usd')

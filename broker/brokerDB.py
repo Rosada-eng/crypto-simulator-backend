@@ -14,7 +14,7 @@ def get_trades_from_user(user_id, crypto_id=None):
 
     return trades
 
-def new_trade (user_id, crypto_id, unit_price, quantity, unit:str='usd'):
+def new_trade (user_id, crypto_id, crypto_name, unit_price, quantity, unit:str='usd'):
     if quantity > 0 : 
         operation = 'buy'
     elif quantity == 0:
@@ -30,11 +30,15 @@ def new_trade (user_id, crypto_id, unit_price, quantity, unit:str='usd'):
         trade = Broker.objects.create(
             user = user,
             crypto_id = crypto_id, 
+            crypto_name = crypto_name,
             operation = operation,
             unit_price = unit_price, 
             unit = unit, 
             quantity = quantity
         )
+
+        user.current_money -= float(unit_price) * float(quantity)
+        user.save()
         return trade
     else:
         raise Exception('Money amount is not enough')

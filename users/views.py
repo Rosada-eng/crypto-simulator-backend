@@ -42,6 +42,24 @@ def edit_user(request, user_id):
     except User.DoesNotExist:
         raise Http404()
 
+@api_view(['POST'])
+def trade_money_to_account(request, user_id):
+    """ 
+        @POST:
+        Depoista (money_amount > 0) ou Retira (money_amount < 0) dinheiro da conta do usuário
+
+        body = {
+            amount: float,
+        }
+    """
+    requested_amount = request.data.get('amount')
+    try:
+        new_user = trade_money(user_id = user_id, money_amount = requested_amount)
+        serialized_user = UserSerializer(new_user)
+        return Response(serialized_user.data)
+
+    except User.DoesNotExist:
+        raise Http404()
 
 @api_view(['POST'])
 def create_new_user(request):

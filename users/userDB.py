@@ -32,6 +32,21 @@ def edit_profile(user_id, new_first_name=None, new_last_name=None,
     user.save()
     return user
 
+def trade_money(user_id, money_amount):
+    user = User.objects.get(id=user_id)
+    # Depósito
+    if float(money_amount) > 0:
+        user.current_money += float(money_amount)
+    # Saques
+    elif float(money_amount) < 0 and float(money_amount) <= user.current_money:
+        user.current_money += float(money_amount)
+    # Saques sem fundo
+    else:
+        raise Exception('You dont have money enough to withdraw')
+
+    user.save()
+    return user
+
 #! Delete user
 def delete_user(user_id):
     result = User.objects.delete(id=user_id)

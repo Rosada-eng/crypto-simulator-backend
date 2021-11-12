@@ -28,6 +28,7 @@ def make_trade(request):
                 -- required -- 
                 "user_id": any,
                 "crypto_id": any,
+                "crypto_name": any,
                 "unit_price": float,
                 "quantity": int(+ | -),
             }
