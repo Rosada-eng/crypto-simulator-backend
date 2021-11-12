@@ -23,7 +23,7 @@ class BrokerTestCase(TestCase):
 
         # Checa quantia atual de dinheiro
         actual_money = user._check_money_amount()
-        self.assertEquals(actual_money, user.initial_money - 20*100 + 5*90)
+        self.assertEquals(actual_money, user.current_money)
 
 
     def test_invalid_transaction(self):

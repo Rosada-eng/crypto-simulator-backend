@@ -77,7 +77,7 @@ def create_new_user(request):
             "password": str,
 
             -- optional --
-            "initial_money": int,
+            "current_money": int,
         }
     """
     print(request.data)

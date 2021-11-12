@@ -6,10 +6,10 @@ from .models import User
 from broker.models import Broker
 
 #! New user
-def new_user(first_name, last_name, email, password, initial_money:int=10000):
+def new_user(first_name, last_name, email, password, current_money:int=10000):
     user = User.objects.create(
         first_name=first_name, last_name=last_name,email=email,password=password,
-        initial_money=initial_money,initial_money_unit='usd'
+        current_money=current_money,current_money_unit='usd'
         )
     #TODO: add password
 
