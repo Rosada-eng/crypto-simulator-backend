@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'crypto_backend.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://localhost/crypto_backend?user=getituser&password=getitsenha',
+        default='postgresql://localhost/crypto_backend?user=guilherme&password=techweb123',
         conn_max_age=600,
         ssl_require=not DEBUG
     )
