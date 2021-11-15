@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn backend-cryptosimulator.wsgi
+web: gunicorn crypto_backend.wsgi
