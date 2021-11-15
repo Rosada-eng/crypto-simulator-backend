@@ -11,12 +11,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os
-from dotenv import load_dotenv
+import dj_database_url
+# import os
+# from dotenv import load_dotenv
 
 # Load .env variables
-load_dotenv()
-DJANGO_SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+# load_dotenv()
+# DJANGO_SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+DJANGO_SECRET_KEY = 'django-insecure-^su0)w_d_2!metns1qm8p4wnx#2-4867_k@ifm#m0u(pkbuhn#'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,9 +31,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://backend-cryptosimulator.herokuapp.com/', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -85,14 +87,11 @@ WSGI_APPLICATION = 'crypto_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cryptosimulator',
-        'USER': 'admin',
-        'PASSWORD': 'techweb123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://localhost/cryptosimulator?user=admin&password=techweb123',
+        conn_max_age=600,
+        ssl_require=not DEBUG
+    )
 }
 
 
