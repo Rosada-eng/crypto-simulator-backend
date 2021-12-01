@@ -87,11 +87,15 @@ WSGI_APPLICATION = 'crypto_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://localhost/crypto_backend?user=guilherme&password=techweb123',
-        conn_max_age=600,
-        ssl_require=not DEBUG
-    )
+    # 'default': dj_database_url.config(
+    #     default='postgresql://localhost/crypto_backend?user=guilherme&password=techweb123',
+    #     conn_max_age=600,
+    #     ssl_require=not DEBUG
+    # )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
